@@ -1,4 +1,5 @@
 import React from "react";
+import './styles/cats.css';
 
 export default function Cats(props) {
   console.log(props)
@@ -7,7 +8,7 @@ export default function Cats(props) {
   return (
     <div className="cats">
       <h3>Cats</h3>
-      <img src={displayCat.imgURL} alt={displayCat.imgDesc} />
+      <img className='displayImg' src={displayCat.imageURL} alt={displayCat.imageDesc} />
       <ul>
         <li>Name: {displayCat.name}</li>
         <li>Age: {displayCat.age}</li>

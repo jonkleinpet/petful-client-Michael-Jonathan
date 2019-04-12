@@ -1,4 +1,5 @@
 import React from "react";
+import './styles/dogs.css';
 
 export default function Dogs(props){
   console.log(props)
@@ -7,7 +8,7 @@ export default function Dogs(props){
     
     <div className="dogs">
       <h3>Dogs</h3>
-      <img src={displayDog.imgURL} alt={displayDog.imgDesc} />
+      <img className='displayImg' src={displayDog.imageURL} alt={displayDog.imageDesc} />
       <ul>
         <li>Name: {displayDog.name}</li>
         <li>Age: {displayDog.age}</li>

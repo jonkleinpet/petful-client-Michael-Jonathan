@@ -32,22 +32,64 @@ export default class App extends Component {
       });
   }
 
+  getusers = () => {
+    return fetch(`${config.API_ENDPOINT}/users`)
+      .then(res => {
+      if (!res.ok) {
+      }
+      return res.json();
+    });
+  }
+
+  handleStart = () => {
+    // fetch fake name from queue and assign to user
+    return fetch(`${config.API_ENDPOINT}/users`, {
+      method: 'POST',
+      header: {
+        'Content-type': 'Application/json'
+      }
+    })
+    .then(res => {
+      if (!res.ok) {
+      }
+      return res.json();
+    })
+      .then(user => {
+        this.setState({ users: [...this.state.users, user] });
+    })
+  }
+
   async componentDidMount() {
     const cats = await this.getCats();
     const dogs = await this.getDogs();
+    const users = await this.getusers();
     const displayCat = cats[0];
     const displayDog = dogs[0];
-    this.setState({ cats, displayCat, dogs, displayDog });
+    this.setState({ users, cats, displayCat, dogs, displayDog });
   }
 
   render() {
-    const {cats, dogs, displayCat, displayDog} = this.state;
+    const {
+      cats,
+      dogs,
+      displayCat,
+      displayDog,
+      users
+    } = this.state;
+
     return (
       <main className="App">
-        <Route exact path={ "/" } component={Home} />
+        <Route exact path={ "/" } render={() => <Home handleStart={this.handleStart} /> } />
         <Route
-          path={"/dashboard"}
-          render={ () => <Dashboard displayDog={ displayDog } displayCat={ displayCat } cats={ cats } dogs={ dogs } /> } />
+          path={ "/dashboard" }
+          render={ () => {
+            return <Dashboard
+              users={ users }
+              displayDog={ displayDog }
+              displayCat={ displayCat }
+              cats={ cats }
+              dogs={ dogs } />
+          } } />
         <Footer />
       </main>
     );

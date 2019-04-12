@@ -5,14 +5,14 @@ import Dogs from "../Dogs/Dogs";
 import UserQueue from "../UserQueue/UserQueue";
 
 export default function Dashboard(props) {
-  const {cats, dogs, displayCat, displayDog} = props;
+  const {cats, dogs, displayCat, displayDog, users} = props;
   console.log(props)
   return (
     <div className="dashboard">
       <Heading />
-      <Cats displayCat={displayCat}/>
-      <Dogs displayDog={displayDog}/>
-      <UserQueue />
+      <Cats displayCat={ displayCat }/>
+      <Dogs displayDog={ displayDog }/>
+      <UserQueue users={ users } />
     </div>
   );
 }

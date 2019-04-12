@@ -1,37 +1,18 @@
 import React, {Component} from "react";
-import config from "../../config";
 import Heading from "../Heading/Heading";
 import Cats from "../Cats/Cats";
 import Dogs from "../Dogs/Dogs";
 import UserQueue from "../UserQueue/UserQueue";
 
-export default class Dashboard extends Component {
-  state = {
-    cats: [],
-    dogs: [],
-    users: []
-  }
-
-  getCats(){
-    fetch(`${config.API_ENDPOINT}/cat`)
-      .then(res => {
-        if(!res.ok){
-        }
-        return res.json();
-      })
-      .then(res => {
-        this.setState()
-      })
-  }
-  
-  render() {
-    return (
-      <div className="dashboard">
-        <Heading />
-        <Cats />
-        <Dogs />
-        <UserQueue />
-      </div>
-    );
-  }
+export default function Dashboard(props) {
+  const { cats, dogs, displayCat } = props;
+  console.log(props)
+  return (
+    <div className="dashboard">
+      <Heading />
+      <Cats displayCat={ displayCat }/>
+      <Dogs dogs={ dogs }/>
+      <UserQueue />
+    </div>
+  );
 }

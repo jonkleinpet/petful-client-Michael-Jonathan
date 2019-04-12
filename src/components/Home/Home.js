@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 
-export default class Home extends Component{
+export default class Home extends Component {
   handleStart(){
     // fetch fake name from queue and assign to user
   }

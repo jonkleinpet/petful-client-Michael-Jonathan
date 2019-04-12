@@ -22,7 +22,7 @@ export default function Cats(props) {
         <li>Sex: {displayCat.sex}</li>
         <li>Story: {displayCat.story}</li>
       </ul>
-      <AdoptButton handleStart={handleStart} />
+      <AdoptButton type={'cat'} handleStart={handleStart} />
       <div className="nextCats">
         {nextCats}
       </div>

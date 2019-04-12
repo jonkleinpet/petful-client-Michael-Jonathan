@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default function AdoptButton(props) {
-  const { handleStart } = props;
+  const { handleStart, type } = props;
   return (
-    <button onClick={() => handleStart()}>Adopt Now!</button>
+    <button type={type} onClick={(e) => handleStart(e)}>Adopt Now!</button>
   )
 }

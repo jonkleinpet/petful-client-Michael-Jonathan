@@ -42,23 +42,72 @@ export default class App extends Component {
     });
   }
 
-  handleStart = () => {
-    setInterval(() => {
-      fetch(`${config.API_ENDPOINT}/users`, {
-        method: 'DELETE',
-        header: {
-          'Content-type': 'Application/json'
-        }
-      })
+  dequeueUser = (timer) => {
+    fetch(`${config.API_ENDPOINT}/users`, {
+      method: 'DELETE',
+      header: {
+        'Content-type': 'Application/json'
+      }
+    })
       .then(res => {
         if (!res.ok) {
+          clearInterval(timer)
         }
         return res.json();
-        })
-        .then(user => {
-          const newUsers = this.state.users.filter(u => user.name !== u.name);
-          this.setState({ users: newUsers });
       })
+      .then(user => {
+        const newUsers = this.state.users.filter(u => user.name !== u.name);
+        this.setState({ users: newUsers });
+      })
+  }
+
+  dequeueCat = (timer) => {
+    fetch(`${config.API_ENDPOINT}/cat`, {
+      method: 'DELETE',
+      header: {
+        'Content-type': 'Application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          clearInterval(timer)
+        }
+        return res.json();
+      })
+      .then(cat => {
+        const newCats = this.state.cats.filter(c => cat.name !== c.name);
+        this.setState({ cats: newCats });
+      })
+  }
+
+  dequeueDog = (timer) => {
+    fetch(`${config.API_ENDPOINT}/dog`, {
+      method: 'DELETE',
+      header: {
+        'Content-type': 'Application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          clearInterval(timer)
+        }
+        return res.json();
+      })
+      .then(dog => {
+        const newDogs = this.state.users.filter(d => dog.name !== d.name);
+        this.setState({ dogs: newDogs });
+      })
+  }
+
+  handleStart = (e) => {
+    const type = e.target.getAttribute('type');
+    const timer = setInterval(() => {
+      this.dequeueUser(timer)
+      if (type === 'dog') {
+        this.dequeueDog(timer)
+      } else {
+        this.dequeueCat(timer)
+      }
     }, 5000)
   }
 

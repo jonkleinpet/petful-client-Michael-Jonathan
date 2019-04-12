@@ -9,6 +9,7 @@ export default function UserQueue(props) {
       </div>
     )
   })
+  
   return(
     <div className="queue">
       <h3>Queue</h3>

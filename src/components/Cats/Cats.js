@@ -3,7 +3,14 @@ import './styles/cats.css';
 
 export default function Cats(props) {
   console.log(props)
-  const {displayCat} = props;
+  const {displayCat, catsQueue} = props;
+  const nextCats = catsQueue.map((cat, i) => {
+    return(
+      <div key={i}>
+        <img className='nextCatImg' src={cat.imageURL} />
+      </div>
+    )
+  })
   
   return (
     <div className="cats">
@@ -16,7 +23,9 @@ export default function Cats(props) {
         <li>Sex: {displayCat.sex}</li>
         <li>Story: {displayCat.story}</li>
       </ul>
+      <div className="nextCats">
+        {nextCats}
+      </div>
     </div>
   )
-  
 }

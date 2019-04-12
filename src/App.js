@@ -42,7 +42,6 @@ export default class App extends Component {
   }
 
   handleStart = () => {
-    // fetch fake name from queue and assign to user
     return fetch(`${config.API_ENDPOINT}/users`, {
       method: 'POST',
       header: {

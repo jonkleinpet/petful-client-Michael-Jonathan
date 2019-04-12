@@ -10,8 +10,8 @@ export default function Dashboard(props) {
   return (
     <div className="dashboard">
       <Heading />
-      <Cats displayCat={ displayCat }/>
-      <Dogs displayDog={ displayDog }/>
+      <Cats displayCat={ displayCat } catsQueue={cats} />
+      <Dogs displayDog={ displayDog } dogsQueue={dogs} />
       <UserQueue users={ users } />
     </div>
   );

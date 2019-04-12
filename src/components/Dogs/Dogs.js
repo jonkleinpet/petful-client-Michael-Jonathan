@@ -3,9 +3,16 @@ import './styles/dogs.css';
 
 export default function Dogs(props){
   console.log(props)
-  const {displayDog} = props;
+  const {displayDog, dogsQueue} = props;
+  const nextDogs = dogsQueue.map((dog, i) => {
+    return(
+      <div key={i}>
+        <img className='nextDogImg' src={dog.imageURL} />
+      </div>
+    )
+  })
+  
   return(
-    
     <div className="dogs">
       <h3>Dogs</h3>
       <img className='displayImg' src={displayDog.imageURL} alt={displayDog.imageDesc} />
@@ -16,6 +23,9 @@ export default function Dogs(props){
         <li>Sex: {displayDog.sex}</li>
         <li>Story: {displayDog.story}</li>
       </ul>
+      <div className="nextDogs">
+        {nextDogs}
+      </div>
     </div>
   )
 }

@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from "react";
+import { Route, BrowserRouter } from "react-router-dom";
+import Home from "./components/Home/Home";
+import Dashboard from "./components/Dashboard/Dashboard";
+import Footer from "./components/Footer/Footer";
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-        </header>
-        
-      </div>
+      <main className="App">
+        <BrowserRouter>
+          <Route exact path="/" component={Home} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Footer />
+        </BrowserRouter>
+      </main>
     );
   }
 }
-
-export default App;

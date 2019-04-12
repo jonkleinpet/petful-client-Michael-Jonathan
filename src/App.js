@@ -12,7 +12,8 @@ export default class App extends Component {
     displayCat: {},
     dogs: [],
     displayDog: {},
-    users: []
+    users: [],
+    error: false
   }
 
   getCats = () => {
@@ -42,7 +43,7 @@ export default class App extends Component {
     });
   }
 
-  dequeueUser = (timer) => {
+  dequeueUser = () => {
     fetch(`${config.API_ENDPOINT}/users`, {
       method: 'DELETE',
       header: {
@@ -51,7 +52,7 @@ export default class App extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          clearInterval(timer)
+          this.setState({ error: true });
         }
         return res.json();
       })
@@ -61,7 +62,7 @@ export default class App extends Component {
       })
   }
 
-  dequeueCat = (timer) => {
+  dequeueCat = () => {
     fetch(`${config.API_ENDPOINT}/cat`, {
       method: 'DELETE',
       header: {
@@ -70,7 +71,7 @@ export default class App extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          clearInterval(timer)
+          this.setState({error: true})
         }
         return res.json();
       })
@@ -80,7 +81,7 @@ export default class App extends Component {
       })
   }
 
-  dequeueDog = (timer) => {
+  dequeueDog = () => {
     fetch(`${config.API_ENDPOINT}/dog`, {
       method: 'DELETE',
       header: {
@@ -89,26 +90,31 @@ export default class App extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          clearInterval(timer)
+          this.setState({ error: true })
         }
         return res.json();
       })
       .then(dog => {
-        const newDogs = this.state.users.filter(d => dog.name !== d.name);
+        const newDogs = this.state.dogs.filter(d => dog.name !== d.name);
         this.setState({ dogs: newDogs });
       })
   }
 
+  timer = (type) => {
+    this.dequeueUser()
+    if (type === 'dog') {
+      this.dequeueDog()
+    } else {
+      this.dequeueCat()
+    }
+    if (this.state.error) {
+      clearInterval(this);
+    }
+  }
+
   handleStart = (e) => {
     const type = e.target.getAttribute('type');
-    const timer = setInterval(() => {
-      this.dequeueUser(timer)
-      if (type === 'dog') {
-        this.dequeueDog(timer)
-      } else {
-        this.dequeueCat(timer)
-      }
-    }, 5000)
+    setInterval(this.timer(type), 2000)
   }
 
   async componentDidMount() {

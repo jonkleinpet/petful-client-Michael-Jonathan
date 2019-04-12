@@ -3,16 +3,19 @@ import Heading from "../Heading/Heading";
 import Cats from "../Cats/Cats";
 import Dogs from "../Dogs/Dogs";
 import UserQueue from "../UserQueue/UserQueue";
+import "./styles/dashboard.css";
 
 export default function Dashboard(props) {
   const {cats, dogs, displayCat, displayDog, users, handleStart } = props;
   console.log(props)
   return (
-    <div className="dashboard">
+    <div>
       <Heading />
-      <Cats handleStart={ handleStart } displayCat={ displayCat } catsQueue={cats} />
-      <Dogs handleStart={ handleStart } displayDog={ displayDog } dogsQueue={dogs} />
-      <UserQueue users={ users } />
+      <div className="dashboard">
+        <Cats handleStart={ handleStart } displayCat={ displayCat } catsQueue={cats} />
+        <Dogs handleStart={ handleStart } displayDog={ displayDog } dogsQueue={dogs} />
+        <UserQueue users={ users } />
+      </div>
     </div>
   );
 }

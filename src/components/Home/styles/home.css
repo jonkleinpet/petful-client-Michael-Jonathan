@@ -1,0 +1,19 @@
+.home{
+  text-align: center;
+}
+
+.home p{
+  width: 75%;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.home button{
+  background-color: #098cff;
+  font-family: 'Inconsolata', monospace;
+  border: none;
+  color: #ffe0c1;
+  padding: 15px 32px;
+  font-size: 16px;
+  text-align: center;
+}

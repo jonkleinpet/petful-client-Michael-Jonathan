@@ -7,3 +7,11 @@
   width: 100px;
   height: auto;
 }
+
+ul{
+  padding: 0;
+}
+
+li{
+  list-style-type: none;
+}

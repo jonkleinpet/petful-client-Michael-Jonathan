@@ -11,7 +11,7 @@ export default function Dashboard(props) {
     <div className="dashboard">
       <Heading />
       <Cats displayCat={displayCat}/>
-      <Dogs dogs={displayDog}/>
+      <Dogs displayDog={displayDog}/>
       <UserQueue />
     </div>
   );

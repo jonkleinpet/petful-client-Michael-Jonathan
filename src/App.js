@@ -35,19 +35,19 @@ export default class App extends Component {
   async componentDidMount() {
     const cats = await this.getCats();
     const dogs = await this.getDogs();
-    const displayCat = await cats[0];
-    const displayDog = await dogs[0];
+    const displayCat = cats[0];
+    const displayDog = dogs[0];
     this.setState({ cats, displayCat, dogs, displayDog });
   }
 
   render() {
-    const {cats, dogs, displayCat} = this.state;
+    const {cats, dogs, displayCat, displayDog} = this.state;
     return (
       <main className="App">
         <Route exact path={ "/" } component={Home} />
         <Route
           path={"/dashboard"}
-          render={ () => <Dashboard displayCat={ displayCat } cats={ cats } dogs={ dogs } /> } />
+          render={ () => <Dashboard displayDog={ displayDog } displayCat={ displayCat } cats={ cats } dogs={ dogs } /> } />
         <Footer />
       </main>
     );

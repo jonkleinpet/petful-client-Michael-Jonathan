@@ -4,7 +4,7 @@ export default function Dogs(props){
   console.log(props)
   const {displayDog} = props;
   return(
-    !props.dogs ? null :
+    
     <div className="dogs">
       <h3>Dogs</h3>
       <img src={displayDog.imgURL} alt={displayDog.imgDesc} />

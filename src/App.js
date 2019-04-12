@@ -4,7 +4,6 @@ import config from "./config";
 import Home from "./components/Home/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer/Footer";
-import { setInterval } from "timers";
 
 export default class App extends Component {
   state = {
@@ -71,7 +70,10 @@ export default class App extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          this.setState({error: true})
+          this.setState({ error: true })
+          if (this.state.error) {
+            clearInterval(this.timer);
+          }
         }
         return res.json();
       })
@@ -100,7 +102,7 @@ export default class App extends Component {
       })
   }
 
-  timer = (type) => {
+  checkTimer = (type) => {
     this.dequeueUser()
     if (type === 'dog') {
       this.dequeueDog()
@@ -108,13 +110,15 @@ export default class App extends Component {
       this.dequeueCat()
     }
     if (this.state.error) {
-      clearInterval(this);
+      clearInterval();
     }
   }
 
   handleStart = (e) => {
     const type = e.target.getAttribute('type');
-    setInterval(this.timer(type), 2000)
+    const timer = setInterval(() => {
+      
+    }, 2000);
   }
 
   async componentDidMount() {
@@ -124,10 +128,6 @@ export default class App extends Component {
     const displayCat = cats[0];
     const displayDog = dogs[0];
     this.setState({ users, cats, displayCat, dogs, displayDog });
-  }
-
-  componentWillUnmount() {
-    clearInterval();
   }
 
   render() {

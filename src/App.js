@@ -4,6 +4,7 @@ import config from "./config";
 import Home from "./components/Home/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer/Footer";
+import { setInterval } from "timers";
 
 export default class App extends Component {
   state = {
@@ -42,20 +43,23 @@ export default class App extends Component {
   }
 
   handleStart = () => {
-    return fetch(`${config.API_ENDPOINT}/users`, {
-      method: 'POST',
-      header: {
-        'Content-type': 'Application/json'
-      }
-    })
-    .then(res => {
-      if (!res.ok) {
-      }
-      return res.json();
-    })
-      .then(user => {
-        this.setState({ users: [...this.state.users, user] });
-    })
+    setInterval(() => {
+      fetch(`${config.API_ENDPOINT}/users`, {
+        method: 'DELETE',
+        header: {
+          'Content-type': 'Application/json'
+        }
+      })
+      .then(res => {
+        if (!res.ok) {
+        }
+        return res.json();
+        })
+        .then(user => {
+          const newUsers = this.state.users.filter(u => user.name !== u.name);
+          this.setState({ users: newUsers });
+      })
+    }, 5000)
   }
 
   async componentDidMount() {
@@ -65,6 +69,10 @@ export default class App extends Component {
     const displayCat = cats[0];
     const displayDog = dogs[0];
     this.setState({ users, cats, displayCat, dogs, displayDog });
+  }
+
+  componentWillUnmount() {
+    clearInterval();
   }
 
   render() {
@@ -83,6 +91,7 @@ export default class App extends Component {
           path={ "/dashboard" }
           render={ () => {
             return <Dashboard
+              handleStart={this.handleStart}
               users={ users }
               displayDog={ displayDog }
               displayCat={ displayCat }

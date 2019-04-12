@@ -1,8 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-export default function Home(props) {
-  const { handleStart } = props;
+export default function Home() {
   return(
     <div className="home">
       <h1>Welcome to Petful</h1>
@@ -15,7 +14,7 @@ export default function Home(props) {
         tristique volutpat. Nam ut gravida urna. Vestibulum volutpat eros pulvinar 
         tellus dignissim condimentum. Quisque sollicitudin rhoncus felis in pellentesque.</p>
       <Link to="/dashboard">
-        <button type="button" onClick={ () => handleStart() }>Start Adopting!</button>
+        <button type="button">Start Adopting!</button>
       </Link>
     </div>
   )

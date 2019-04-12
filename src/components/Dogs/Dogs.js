@@ -1,12 +1,13 @@
 import React from "react";
 import './styles/dogs.css';
+import AdoptButton from "../AdoptButton/AdoptButton";
 
 export default function Dogs(props){
   console.log(props)
-  const {displayDog, dogsQueue} = props;
+  const {displayDog, dogsQueue, handleStart} = props;
   const nextDogs = dogsQueue.map((dog, i) => {
     return(
-      <img className='nextDogImg' src={dog.imageURL} />
+      <img className='nextDogImg' key={i} alt={dog.imageDesc} src={dog.imageURL} />
     )
   })
 
@@ -21,6 +22,7 @@ export default function Dogs(props){
         <li>Sex: {displayDog.sex}</li>
         <li>Story: {displayDog.story}</li>
       </ul>
+      <AdoptButton handleStart={ handleStart } />
       <div className="nextDogs">
         {nextDogs}
       </div>

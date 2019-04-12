@@ -4,7 +4,7 @@ export default function UserQueue(props) {
   const { users } = props;
   const userQueue = users.map((user, i) => {
     return (
-      <li>
+      <li key={ i }>
         {user.name}
       </li>
     )

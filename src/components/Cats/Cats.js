@@ -6,12 +6,10 @@ export default function Cats(props) {
   const {displayCat, catsQueue} = props;
   const nextCats = catsQueue.map((cat, i) => {
     return(
-      <div key={i}>
-        <img className='nextCatImg' src={cat.imageURL} />
-      </div>
+      <img className='nextCatImg' src={cat.imageURL} />
     )
   })
-  
+
   return (
     <div className="cats">
       <h3>Cats</h3>

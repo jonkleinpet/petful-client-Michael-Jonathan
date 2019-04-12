@@ -6,12 +6,10 @@ export default function Dogs(props){
   const {displayDog, dogsQueue} = props;
   const nextDogs = dogsQueue.map((dog, i) => {
     return(
-      <div key={i}>
-        <img className='nextDogImg' src={dog.imageURL} />
-      </div>
+      <img className='nextDogImg' src={dog.imageURL} />
     )
   })
-  
+
   return(
     <div className="dogs">
       <h3>Dogs</h3>

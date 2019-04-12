@@ -4,7 +4,6 @@ import config from "./config";
 import Home from "./components/Home/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer/Footer";
-import { setInterval } from "timers";
 
 export default class App extends Component {
   state = {
@@ -12,7 +11,8 @@ export default class App extends Component {
     displayCat: {},
     dogs: [],
     displayDog: {},
-    users: []
+    users: [],
+    error: false
   }
 
   getCats = () => {
@@ -42,7 +42,7 @@ export default class App extends Component {
     });
   }
 
-  dequeueUser = (timer) => {
+  dequeueUser = () => {
     fetch(`${config.API_ENDPOINT}/users`, {
       method: 'DELETE',
       header: {
@@ -51,7 +51,7 @@ export default class App extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          clearInterval(timer)
+          this.setState({ error: true });
         }
         return res.json();
       })
@@ -61,7 +61,7 @@ export default class App extends Component {
       })
   }
 
-  dequeueCat = (timer) => {
+  dequeueCat = () => {
     fetch(`${config.API_ENDPOINT}/cat`, {
       method: 'DELETE',
       header: {
@@ -70,7 +70,10 @@ export default class App extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          clearInterval(timer)
+          this.setState({ error: true })
+          if (this.state.error) {
+            clearInterval(this.timer);
+          }
         }
         return res.json();
       })
@@ -80,7 +83,7 @@ export default class App extends Component {
       })
   }
 
-  dequeueDog = (timer) => {
+  dequeueDog = () => {
     fetch(`${config.API_ENDPOINT}/dog`, {
       method: 'DELETE',
       header: {
@@ -89,26 +92,33 @@ export default class App extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          clearInterval(timer)
+          this.setState({ error: true })
         }
         return res.json();
       })
       .then(dog => {
-        const newDogs = this.state.users.filter(d => dog.name !== d.name);
+        const newDogs = this.state.dogs.filter(d => dog.name !== d.name);
         this.setState({ dogs: newDogs });
       })
+  }
+
+  checkTimer = (type) => {
+    this.dequeueUser()
+    if (type === 'dog') {
+      this.dequeueDog()
+    } else {
+      this.dequeueCat()
+    }
+    if (this.state.error) {
+      clearInterval();
+    }
   }
 
   handleStart = (e) => {
     const type = e.target.getAttribute('type');
     const timer = setInterval(() => {
-      this.dequeueUser(timer)
-      if (type === 'dog') {
-        this.dequeueDog(timer)
-      } else {
-        this.dequeueCat(timer)
-      }
-    }, 5000)
+      
+    }, 2000);
   }
 
   async componentDidMount() {
@@ -118,10 +128,6 @@ export default class App extends Component {
     const displayCat = cats[0];
     const displayDog = dogs[0];
     this.setState({ users, cats, displayCat, dogs, displayDog });
-  }
-
-  componentWillUnmount() {
-    clearInterval();
   }
 
   render() {

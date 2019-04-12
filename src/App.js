@@ -36,7 +36,7 @@ export default class App extends Component {
   getusers = () => {
     return fetch(`${config.API_ENDPOINT}/users`)
       .then(res => {
-      if (!res.ok) {
+        if (!res.ok) {
       }
       return res.json();
     });
@@ -72,14 +72,13 @@ export default class App extends Component {
         if (!res.ok) {
           this.setState({ error: true })
           if (this.state.error) {
-            clearInterval(this.timer);
           }
         }
         return res.json();
       })
       .then(cat => {
         const newCats = this.state.cats.filter(c => cat.name !== c.name);
-        this.setState({ cats: newCats });
+        this.setState({ cats: newCats, displayCat: newCats[0] });
       })
   }
 
@@ -98,27 +97,36 @@ export default class App extends Component {
       })
       .then(dog => {
         const newDogs = this.state.dogs.filter(d => dog.name !== d.name);
-        this.setState({ dogs: newDogs });
+        this.setState({ dogs: newDogs, displayDog: newDogs[0] });
       })
   }
 
   checkTimer = (type) => {
     this.dequeueUser()
+    const { dogs, cats } = this.state;
     if (type === 'dog') {
       this.dequeueDog()
-    } else {
+    } else if (type === 'cat') {
       this.dequeueCat()
-    }
-    if (this.state.error) {
-      clearInterval();
+    } 
+    else
+    if (dogs.length > cats.length) {
+      this.dequeueDog();
+      }
+    else {
+      this.dequeueCat();
+      }
+    if (this.state.users !== []) {
+      if (this.state.error || this.state.users[1].name === 'Thinkful') {
+        clearInterval(this.timer);
+      }
     }
   }
 
+ 
   handleStart = (e) => {
     const type = e.target.getAttribute('type');
-    const timer = setInterval(() => {
-      
-    }, 2000);
+    this.checkTimer(type)
   }
 
   async componentDidMount() {
@@ -128,7 +136,9 @@ export default class App extends Component {
     const displayCat = cats[0];
     const displayDog = dogs[0];
     this.setState({ users, cats, displayCat, dogs, displayDog });
+    this.timer = setInterval(this.checkTimer, 2000);
   }
+    
 
   render() {
     const {
@@ -136,7 +146,8 @@ export default class App extends Component {
       dogs,
       displayCat,
       displayDog,
-      users
+      users,
+      error
     } = this.state;
 
     return (
@@ -150,6 +161,7 @@ export default class App extends Component {
               users={ users }
               displayDog={ displayDog }
               displayCat={ displayCat }
+              error={error}
               cats={ cats }
               dogs={ dogs } />
           } } />

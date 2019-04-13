@@ -4,6 +4,7 @@ import config from "./config";
 import Home from "./components/Home/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer/Footer";
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 export default class App extends Component {
   state = {
@@ -103,34 +104,36 @@ export default class App extends Component {
 
   checkTimer = (type, timer) => {
     this.dequeueUser()
-    const { dogs, cats } = this.state;
-    if (this.state.users !== []) {
+    const { dogs, cats, users } = this.state;
+    console.log(users)
+    if (users !== []) {
       if (this.state.error) {
         clearInterval(timer);
       }
-      
-      else if (type === 'dog') {
-        this.dequeueDog()
-      } else if (type === 'cat') {
-        this.dequeueCat()
+      if (dogs.length > cats.length) {
+        this.dequeueDog();
       }
       else
-        if (dogs.length > cats.length) {
-          this.dequeueDog();
-        }
-        else {
-          this.dequeueCat();
-        }
+        if (dogs.length < cats.length) {
+        this.dequeueCat();
+      }
+        else
+          if (type === 'dog') {
+        this.dequeueDog()
+          } else
+            if (type === 'cat') {   
+        this.dequeueCat()
+      }
     }
   }
 
  
   handleStart = (e) => {
-    const type = e.target.getAttribute('type');
+    let type = e.target.getAttribute('type');
     if (this.state.cats || this.state.dogs) {
       const timer = setInterval(() => {
       this.checkTimer(type, timer);
-      }, 3000); 
+      }, 7000); 
     }
   }
 
@@ -161,14 +164,19 @@ export default class App extends Component {
         <Route
           path={ "/dashboard" }
           render={ () => {
-            return <Dashboard
-              handleStart={this.handleStart}
-              users={ users }
-              displayDog={ displayDog }
-              displayCat={ displayCat }
-              error={error}
-              cats={ cats }
-              dogs={ dogs } />
+            
+            return (
+              <ErrorBoundary>
+                <Dashboard
+                  handleStart={this.handleStart}
+                  users={ users }
+                  displayDog={ displayDog }
+                  displayCat={ displayCat }
+                  error={error}
+                  cats={ cats }
+                  dogs={ dogs } />
+              </ErrorBoundary>
+              )
           } } />
         <Footer />
       </main>

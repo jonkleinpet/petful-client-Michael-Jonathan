@@ -1,4 +1,18 @@
 .dashboard{
   display: flex;
   justify-content: space-around;
+  height: 100vh;
+}
+
+img {
+  border-radius: 10px;
+}
+
+button {
+  border-radius: 8px;
+}
+
+button:hover {
+  cursor: pointer;
+  color: rgba(255, 242, 242, 0.75)
 }

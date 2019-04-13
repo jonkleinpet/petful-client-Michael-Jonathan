@@ -19,21 +19,21 @@ export default function Cats(props) {
           ? <div>No More Cats!</div>
           : (
             <>
-            <img className='displayImg' src={ displayCat.imageURL } alt={ displayCat.imageDesc } />
-            <ul>
-              <li>Name: {displayCat.name}</li>
-              <li>Age: {displayCat.age}</li>
-              <li>Breed: {displayCat.breed}</li>
-              <li>Sex: {displayCat.sex}</li>
-              <li>Story: {displayCat.story}</li>
-            </ul>
+              <img className='displayImg' src={ displayCat.imageURL } alt={ displayCat.imageDesc } />
+              <ul>
+                <li>Name: { displayCat.name }</li>
+                <li>Age: { displayCat.age }</li>
+                <li>Breed: { displayCat.breed }</li>
+                <li>Sex: { displayCat.sex }</li>
+                <li>Story: { displayCat.story }</li>
+              </ul>
+              <AdoptButton type={ 'cat' } handleStart={ handleStart } />
+              <div className="nextCats">
+                { nextCats }
+              </div>
             </>
-            )
+          )
       }
-      <AdoptButton type={'cat'} handleStart={handleStart} />
-      <div className="nextCats">
-        {nextCats}
-      </div>
     </div>
   )
 }

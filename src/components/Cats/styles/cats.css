@@ -1,9 +1,10 @@
 .displayImg {
   width: 500px;
-  height: auto;
+  height: 350px;
 }
 
 .nextCatImg {
   width: 100px;
-  height: auto;
+  height: 70px;
+  margin-right: 10px;
 }

@@ -3,8 +3,7 @@ import './styles/cats.css';
 import AdoptButton from '../AdoptButton/AdoptButton';
 
 export default function Cats(props) {
-  console.log(props)
-  const {displayCat, catsQueue, handleStart} = props;
+  const { displayCat, catsQueue, handleStart, queueRunning } = props;
   const nextCats = catsQueue.map((cat, i) => {
     return (
       <img className='nextCatImg' key={i} alt={cat.imageDesc} src={cat.imageURL} />
@@ -27,7 +26,11 @@ export default function Cats(props) {
                 <li>Sex: { displayCat.sex }</li>
                 <li>Story: { displayCat.story }</li>
               </ul>
-              <AdoptButton type={ 'cat' } handleStart={ handleStart } />
+              <AdoptButton
+                type={ 'cat' }
+                queueRunning={ queueRunning }
+                handleStart={ handleStart }
+              />
               <div className="nextCats">
                 { nextCats }
               </div>

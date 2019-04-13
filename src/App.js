@@ -13,6 +13,7 @@ export default class App extends Component {
     dogs: [],
     displayDog: {},
     users: [],
+    queueRunning: false,
     error: false
   }
 
@@ -105,10 +106,10 @@ export default class App extends Component {
   checkTimer = (type, timer) => {
     this.dequeueUser()
     const { dogs, cats, users } = this.state;
-    console.log(users)
     if (users !== []) {
       if (this.state.error) {
         clearInterval(timer);
+        this.setState({ queueRunning: false })
       }
       if (dogs.length > cats.length) {
         this.dequeueDog();
@@ -147,7 +148,6 @@ export default class App extends Component {
     
   }
     
-
   render() {
     const {
       cats,
@@ -155,7 +155,8 @@ export default class App extends Component {
       displayCat,
       displayDog,
       users,
-      error
+      error,
+      queueRunning
     } = this.state;
 
     return (
@@ -168,11 +169,12 @@ export default class App extends Component {
             return (
               <ErrorBoundary>
                 <Dashboard
-                  handleStart={this.handleStart}
+                  handleStart={ this.handleStart }
                   users={ users }
                   displayDog={ displayDog }
                   displayCat={ displayCat }
-                  error={error}
+                  error={ error }
+                  queueRunning={ queueRunning }
                   cats={ cats }
                   dogs={ dogs } />
               </ErrorBoundary>

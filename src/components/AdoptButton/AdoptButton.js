@@ -1,4 +1,5 @@
 import React from 'react';
+import "./styles/adoptbutton.css";
 
 export default function AdoptButton(props) {
   const { handleStart, type } = props;

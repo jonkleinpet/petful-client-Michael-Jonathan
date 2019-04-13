@@ -4,6 +4,7 @@ import config from "./config";
 import Home from "./components/Home/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer/Footer";
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 export default class App extends Component {
   state = {
@@ -101,32 +102,39 @@ export default class App extends Component {
       })
   }
 
-  checkTimer = (type) => {
+  checkTimer = (type, timer) => {
     this.dequeueUser()
-    const { dogs, cats } = this.state;
-    if (type === 'dog') {
-      this.dequeueDog()
-    } else if (type === 'cat') {
-      this.dequeueCat()
-    } 
-    else
-    if (dogs.length > cats.length) {
-      this.dequeueDog();
+    const { dogs, cats, users } = this.state;
+    console.log(users)
+    if (users !== []) {
+      if (this.state.error) {
+        clearInterval(timer);
       }
-    else {
-      this.dequeueCat();
+      if (dogs.length > cats.length) {
+        this.dequeueDog();
       }
-    if (this.state.users !== []) {
-      if (this.state.error || this.state.users[1].name === 'Thinkful') {
-        clearInterval(this.timer);
+      else
+        if (dogs.length < cats.length) {
+        this.dequeueCat();
+      }
+        else
+          if (type === 'dog') {
+        this.dequeueDog()
+          } else
+            if (type === 'cat') {   
+        this.dequeueCat()
       }
     }
   }
 
  
   handleStart = (e) => {
-    const type = e.target.getAttribute('type');
-    this.checkTimer(type)
+    let type = e.target.getAttribute('type');
+    if (this.state.cats || this.state.dogs) {
+      const timer = setInterval(() => {
+      this.checkTimer(type, timer);
+      }, 7000); 
+    }
   }
 
   async componentDidMount() {
@@ -136,7 +144,7 @@ export default class App extends Component {
     const displayCat = cats[0];
     const displayDog = dogs[0];
     this.setState({ users, cats, displayCat, dogs, displayDog });
-    this.timer = setInterval(this.checkTimer, 2000);
+    
   }
     
 
@@ -156,14 +164,19 @@ export default class App extends Component {
         <Route
           path={ "/dashboard" }
           render={ () => {
-            return <Dashboard
-              handleStart={this.handleStart}
-              users={ users }
-              displayDog={ displayDog }
-              displayCat={ displayCat }
-              error={error}
-              cats={ cats }
-              dogs={ dogs } />
+            
+            return (
+              <ErrorBoundary>
+                <Dashboard
+                  handleStart={this.handleStart}
+                  users={ users }
+                  displayDog={ displayDog }
+                  displayCat={ displayCat }
+                  error={error}
+                  cats={ cats }
+                  dogs={ dogs } />
+              </ErrorBoundary>
+              )
           } } />
         <Footer />
       </main>

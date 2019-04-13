@@ -1,9 +1,17 @@
 .displayImg {
   width: 500px;
-  height: auto;
 }
 
 .nextDogImg {
   width: 100px;
-  height: auto;
+  height: 70px;
+  margin-right: 10px;
+}
+
+ul{
+  padding: 0;
+}
+
+li{
+  list-style-type: none;
 }

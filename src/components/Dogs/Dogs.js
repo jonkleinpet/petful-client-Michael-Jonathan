@@ -13,19 +13,26 @@ export default function Dogs(props){
 
   return(
     <div className="dogs">
-      <h3>Dogs</h3>
-      <img className='displayImg' src={displayDog.imageURL} alt={displayDog.imageDesc} />
-      <ul>
-        <li>Name: {displayDog.name}</li>
-        <li>Age: {displayDog.age}</li>
-        <li>Breed: {displayDog.breed}</li>
-        <li>Sex: {displayDog.sex}</li>
-        <li>Story: {displayDog.story}</li>
-      </ul>
-      <AdoptButton type={'dog'} handleStart={ handleStart } />
-      <div className="nextDogs">
-        {nextDogs}
-      </div>
+      { displayDog
+        ? (<>
+          <h3>Dogs</h3>
+          <img className='displayImg' src={ displayDog.imageURL } alt={ displayDog.imageDesc } />
+          <ul>
+            <li>Name: { displayDog.name }</li>
+            <li>Age: { displayDog.age }</li>
+            <li>Breed: { displayDog.breed }</li>
+            <li>Sex: { displayDog.sex }</li>
+            <li>Story: { displayDog.story }</li>
+          </ul>
+          <AdoptButton type={ 'dog' } handleStart={ handleStart } />
+          <div className="nextDogs">
+            { nextDogs }
+          </div>
+          </>
+          )
+        :<div>No Dogs Are Left!</div>
+      }
+      
     </div>
   )
 }

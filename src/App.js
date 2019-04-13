@@ -101,32 +101,37 @@ export default class App extends Component {
       })
   }
 
-  checkTimer = (type) => {
+  checkTimer = (type, timer) => {
     this.dequeueUser()
     const { dogs, cats } = this.state;
-    if (type === 'dog') {
-      this.dequeueDog()
-    } else if (type === 'cat') {
-      this.dequeueCat()
-    } 
-    else
-    if (dogs.length > cats.length) {
-      this.dequeueDog();
-      }
-    else {
-      this.dequeueCat();
-      }
     if (this.state.users !== []) {
-      if (this.state.error || this.state.users[1].name === 'Thinkful') {
-        clearInterval(this.timer);
+      if (this.state.error) {
+        clearInterval(timer);
       }
+      
+      else if (type === 'dog') {
+        this.dequeueDog()
+      } else if (type === 'cat') {
+        this.dequeueCat()
+      }
+      else
+        if (dogs.length > cats.length) {
+          this.dequeueDog();
+        }
+        else {
+          this.dequeueCat();
+        }
     }
   }
 
  
   handleStart = (e) => {
     const type = e.target.getAttribute('type');
-    this.checkTimer(type)
+    if (this.state.cats || this.state.dogs) {
+      const timer = setInterval(() => {
+      this.checkTimer(type, timer);
+      }, 3000); 
+    }
   }
 
   async componentDidMount() {
@@ -136,7 +141,7 @@ export default class App extends Component {
     const displayCat = cats[0];
     const displayDog = dogs[0];
     this.setState({ users, cats, displayCat, dogs, displayDog });
-    this.timer = setInterval(this.checkTimer, 2000);
+    
   }
     
 
